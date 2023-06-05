@@ -1,0 +1,53 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: azure;
+  margin-top: 0px;
+  background-image: url(https://img.freepik.com/free-vector/yellow-blue-wave-gradient-background-vector_53876-128354.jpg?w=1060&t=st=1685911978~exp=1685912578~hmac=9933ba395962ba3afe8b451c0abdcff9a23383fdbe0fd2d236c240c944a6cb5d);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+  background-attachment: fixed;
+}
+
+.form-position {
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: 100%;
+  background-color: #075494;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2), 0 16px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+}
+
+.unvisible {
+  display: none;
+}
+.loader {
+  display: none;
+}
+.gallary {
+  width: 100%;
+  padding: 0 10px;
+  display: grid;
+  grid-template-columns: repeat(4, 380px);
+  gap: 10px;
+  margin: 0 auto;
+}
+
+.btn-submit {
+  border-radius: 5px;
+  color: rgb(5, 5, 81);
+  background-color: rgb(87, 237, 254);
+  font-weight: 700;
+  border: 0px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}
+input {
+  border-radius: 5px;
+  border-color: blue;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}
