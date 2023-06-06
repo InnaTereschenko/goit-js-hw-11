@@ -11,15 +11,19 @@
 </head>
 
 <body>
-  <div class="form-position">
-    <form class="search-form" id="search-form">
-      <input type="text" name="searchQuery" autocomplete="off" placeholder="Search images..." />
-      <button class="btn-submit" type="submit">Search</button>
-    </form>
-  </div>
-  <h1 class="loader">Loading...Please wait</h1>
-  <div class="gallery">
-    <!-- Картки зображень -->
+  <div class="container">
+    <div class="form-position">
+      <form class="search-form" id="search-form">
+        <input type="text" name="searchQuery" autocomplete="off" placeholder="Search images..." />
+        <button class="btn-submit" type="submit">Search</button>
+      </form>
+    </div>
+    <h1 class="loader unvisible">Loading...Please wait</h1>
+    <div class="gallery">
+      <!-- Картки зображень -->
+    </div>
+    <button type="button" class="load-more" id="load-more">Load more</button>
+
   </div>
 </body>
 
