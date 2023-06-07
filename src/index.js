@@ -129,9 +129,9 @@ function renderHtml(images) {
         comments,
         downloads,
       }) => {
-        return `<div class="photo-card">
+        return `<div class="photo-card hover-image-scale">
    <a href="${largeImageURL}" class="simple-lightbox">
-        <img src="${webformatURL}" alt="${tags}" loading="lazy" />
+        <img src="${webformatURL}" alt="${tags}" loading="lazy" class="hover-image-scale"/>
       </a>
   <div class="info">
     <p class="info-item">

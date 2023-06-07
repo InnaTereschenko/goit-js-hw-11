@@ -58,6 +58,7 @@ font-size: medium;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
     rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
     rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+
 }
 
 .photo-card img{
@@ -66,6 +67,18 @@ font-size: medium;
   
 }
 
+.hover-image-scale{
+display: inline-block; 
+  overflow: hidden; /* Скрываем всё за контуром */
+}
+.hover-image-scale img {
+  transition: 1s; /* Время эффекта */
+  display: block; 
+}
+.hover-image-scale img:hover {
+  transform: scale(1.2); /* Увеличиваем масштаб */
+}
+     
 .btn-submit {
   padding: 10px 10px;
   border-radius: 5px;
@@ -78,6 +91,12 @@ font-size: medium;
     rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
     rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
     cursor: pointer;
+}
+.btn-submit:hover,
+.btn-submit:focus{
+background-color: blue;
+color: #f5f5f5;
+transition: 2s;
 }
 
 input {
