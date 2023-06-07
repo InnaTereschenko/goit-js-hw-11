@@ -10,6 +10,14 @@ let pageToFetch = 0;
 let queryToFetch = '';
 let totalHits = 0;
 
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting)
+        getImages(queryToFetch, pageToFetch); 
+    }
+    )
+}, {rootMargin: '200px', });
+
 const lightbox = new SimpleLightbox('.gallery a', {
   captionDelay: 250,
   captionsData: 'alt',
@@ -29,7 +37,10 @@ const params = {
 
 // https://pixabay.com/api/?key=36956826-672ab3f15608cce646c5c212d&q=yellow+flowers&image_type=photo
 
-hideLoadMoreBtn();
+
+
+
+// hideLoadMoreBtn();
 
 async function getImages(q, page) {
   Loading.standard('Loading...Please wait');
@@ -63,9 +74,12 @@ async function getImages(q, page) {
     scrolPage();
     Loading.remove(1500);
     
-    if (totalHits > 40) {
-      showLoadMoreBtn();
-    }
+    // if (totalHits > 40) {
+    //   showLoadMoreBtn();
+    // }
+
+    observer.observe(refs.guard);
+
   } catch (error) {
     console.error('Error:', error);
     Loading.remove();
@@ -81,7 +95,7 @@ async function getImages(q, page) {
   }
 }
 
-refs.loadMoreBtn.addEventListener('click', loadMoreImages);
+// refs.loadMoreBtn.addEventListener('click', loadMoreImages);
 
 refs.form.addEventListener('submit', onSubmit);
 
@@ -145,31 +159,31 @@ function incrementPage(page) {
   pageToFetch += 1;
 }
 
-async function loadMoreImages() {
-  await getImages(queryToFetch, pageToFetch);
-  incrementPage(pageToFetch);
-  if ((pageToFetch - 1) * 40 >= totalHits) {
-    hideLoadMoreBtn();
+// async function loadMoreImages() {
+//   await getImages(queryToFetch, pageToFetch);
+//   incrementPage(pageToFetch);
+//   if ((pageToFetch - 1) * 40 >= totalHits) {
+//     // hideLoadMoreBtn();
 
-    Notify.failure(
-      'We are sorry, but you have reached the end of search results.',
-      {
-        fontSize: '20px',
-        distance: '45%',
-        position: 'center-top',
-      }
-    );
-    return;
-  }
-}
+//     Notify.failure(
+//       'We are sorry, but you have reached the end of search results.',
+//       {
+//         fontSize: '20px',
+//         distance: '45%',
+//         position: 'center-top',
+//       }
+//     );
+//     return;
+//   }
+// }
 
-function showLoadMoreBtn() {
-  refs.loadMoreBtn.classList.remove('unvisible');
-}
+// function showLoadMoreBtn() {
+//   refs.loadMoreBtn.classList.remove('unvisible');
+// }
 
-function hideLoadMoreBtn() {
-  refs.loadMoreBtn.classList.add('unvisible');
-}
+// function hideLoadMoreBtn() {
+//   refs.loadMoreBtn.classList.add('unvisible');
+// }
 
 function scrolPage()
 {const { height: cardHeight } = document
