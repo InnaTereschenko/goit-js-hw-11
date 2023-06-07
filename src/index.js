@@ -52,6 +52,7 @@ async function getImages(q, page) {
     } else incrementPage(page);
     renderHtml(data.hits);
 
+
     if (totalHits !== 0 && page === 2) {
       Notify.success(`Hooray! We found ${totalHits} images.`, {
       fontSize: '20px',
@@ -59,6 +60,7 @@ async function getImages(q, page) {
     });
 }
     lightbox.refresh();
+    scrolPage();
     Loading.remove(1500);
     
     if (totalHits > 40) {
@@ -167,4 +169,15 @@ function showLoadMoreBtn() {
 
 function hideLoadMoreBtn() {
   refs.loadMoreBtn.classList.add('unvisible');
+}
+
+function scrolPage()
+{const { height: cardHeight } = document
+  .querySelector(".gallery")
+  .firstElementChild.getBoundingClientRect();
+
+window.scrollBy({
+  top: cardHeight * 2,
+  behavior: "smooth",
+});
 }
