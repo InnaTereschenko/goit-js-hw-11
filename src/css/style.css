@@ -61,6 +61,8 @@ font-size: medium;
 
 }
 
+
+
 .photo-card img{
  max-width: 100%;
   height: auto;
@@ -70,6 +72,7 @@ font-size: medium;
 .hover-image-scale{
 display: inline-block; 
   overflow: hidden; /* Скрываем всё за контуром */
+  cursor: pointer;
 }
 .hover-image-scale img {
   transition: 1s; /* Время эффекта */
@@ -90,7 +93,7 @@ display: inline-block;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
     rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
     rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
-    cursor: pointer;
+    
 }
 .btn-submit:hover,
 .btn-submit:focus{
