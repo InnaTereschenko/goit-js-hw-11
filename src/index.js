@@ -1,5 +1,4 @@
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import axios from 'axios';
 import { Loading } from 'notiflix/build/notiflix-loading-aio';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
@@ -37,7 +36,7 @@ function getImages(q, page) {
     .then(data => {
       totalHits = data.totalHits;
 
-      if (data.totalHits === 0) {
+      if (totalHits === 0) {
         Loading.remove();
         Notify.failure(
           'Sorry, there are no images matching your search query. Please try again.',
@@ -50,15 +49,14 @@ function getImages(q, page) {
         incrementPage(pageToFetch);
         renderHtml(data.hits);
 
-        if (totalHits !== 0 && page === 2) {
+        if (page === 1) {
           Notify.success(`Hooray! We found ${totalHits} images.`, {
             fontSize: '20px',
             distance: '40%',
           });
         }
         lightbox.refresh();
-        scrollPage();
-        Loading.remove(1500);
+        Loading.remove(500);
 
         // if (totalHits > 40) {
         //   showLoadMoreBtn();
@@ -151,9 +149,7 @@ function incrementPage(page) {
 
 function loadMoreImages() {
   getImages(queryToFetch, pageToFetch);
-  incrementPage(pageToFetch);
-  scrollPage();
-  if ((pageToFetch - 1) * 40 >= totalHits) {
+  if (pageToFetch >= (totalHits / 40)) {
     // hideLoadMoreBtn();
 
     Notify.failure(
@@ -164,8 +160,10 @@ function loadMoreImages() {
         position: 'center-top',
       }
     );
+    
     return;
   }
+  
 }
 
 // function showLoadMoreBtn() {
@@ -176,13 +174,13 @@ function loadMoreImages() {
 //   refs.loadMoreBtn.classList.add('unvisible');
 // }
 
-function scrollPage() {
-  const { height: cardHeight } = document
-    .querySelector('.gallery')
-    .firstElementChild.getBoundingClientRect();
+// function scrollPage() {
+//   const { height: cardHeight } = document
+//     .querySelector('.gallery')
+//     .firstElementChild.getBoundingClientRect();
 
-  window.scrollBy({
-    top: cardHeight * 2,
-    behavior: 'smooth',
-  });
-};
+//   window.scrollBy({
+//     top: cardHeight * 2,
+//     behavior: 'smooth',
+//   });
+// }
