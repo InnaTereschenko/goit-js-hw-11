@@ -26,60 +26,68 @@ const lightbox = new SimpleLightbox('.gallery a', {
 
 // hideLoadMoreBtn();
 
-function getImages(q, page) {
+async function getImages(q, page) {
   Loading.standard('Loading...Please wait');
-  // try {
-  // const { data } = await axios.get(
-  //   `${axios.defaults.baseURL}?key=${API_KEY}&q=${q}&image_type=photo&orientation=horizontal&safesearch=true&page=${pageToFetch}&per_page=40`
-  // );
-  fetchImages(q, page)
-    .then(data => {
-      totalHits = data.totalHits;
 
-      if (totalHits === 0) {
-        Loading.remove();
-        Notify.failure(
-          'Sorry, there are no images matching your search query. Please try again.',
-          {
-            fontSize: '20px',
-            distance: '40%',
-          }
-        );
-      } else {
-        incrementPage(pageToFetch);
-        renderHtml(data.hits);
-
-        if (page === 1) {
-          Notify.success(`Hooray! We found ${totalHits} images.`, {
-            fontSize: '20px',
-            distance: '40%',
-          });
-        }
-        lightbox.refresh();
-        Loading.remove(500);
-
-        // if (totalHits > 40) {
-        //   showLoadMoreBtn();
-        // }
-        observer.observe(refs.guard);
-      }
-    })
-    .catch(error => {
-      console.log('Error:', error);
+  try {
+    const data = await fetchImages(q, page);
+    totalHits = data.totalHits;
+    if (totalHits === 0) {
       Loading.remove();
       Notify.failure(
-        'An error occurred while fetching images. Please try again later.',
+        'Sorry, there are no images matching your search query. Please try again.',
         {
           fontSize: '20px',
-          distance: '45%',
-          position: 'center-top',
+          distance: '40%',
         }
       );
-      return;
-    })
-    .finally(() => {
-      refs.form.reset();
-    });
+    } else {
+      renderHtml(data.hits);
+
+      if (page === 1) {
+        Notify.success(`Hooray! We found ${totalHits} images.`, {
+          fontSize: '20px',
+          distance: '40%',
+        });
+      }
+      lightbox.refresh();
+      Loading.remove(500);
+
+      if (pageToFetch === Math.ceil(totalHits / 40)) {
+        // hideLoadMoreBtn();
+        observer.unobserve(refs.guard);
+        Notify.failure(
+          'We are sorry, but you have reached the end of search results.',
+          {
+            fontSize: '20px',
+            distance: '45%',
+            position: 'center-top',
+          }
+        );
+
+        return;
+      }
+      // if (totalHits > 40) {
+      //   showLoadMoreBtn();
+      // }
+      observer.observe(refs.guard);
+      incrementPage(pageToFetch);
+    }
+  } catch (error) {
+    console.log('Error:', error);
+    Loading.remove();
+    Notify.failure(
+      'An error occurred while fetching images. Please try again later.',
+      {
+        fontSize: '20px',
+        distance: '45%',
+        position: 'center-top',
+      }
+    );
+    return;
+  } finally {
+    refs.form.reset();
+  }
 }
 
 // refs.loadMoreBtn.addEventListener('click', loadMoreImages);
@@ -89,7 +97,7 @@ refs.form.addEventListener('submit', onSubmit);
 function onSubmit(evt) {
   evt.preventDefault();
   queryToFetch = evt.currentTarget.elements.searchQuery.value.trim();
-  console.log(queryToFetch);
+  // console.log(queryToFetch);
   if (queryToFetch === '') {
     Notify.warning('Please, enter text!', {
       fontSize: '20px',
@@ -140,7 +148,7 @@ function renderHtml(images) {
     )
     .join('');
   refs.gallery.insertAdjacentHTML('beforeend', markup);
-  lightbox.refresh();
+  
 }
 
 function incrementPage(page) {
@@ -149,21 +157,6 @@ function incrementPage(page) {
 
 function loadMoreImages() {
   getImages(queryToFetch, pageToFetch);
-  if (pageToFetch >= (totalHits / 40)) {
-    // hideLoadMoreBtn();
-
-    Notify.failure(
-      'We are sorry, but you have reached the end of search results.',
-      {
-        fontSize: '20px',
-        distance: '45%',
-        position: 'center-top',
-      }
-    );
-    
-    return;
-  }
-  
 }
 
 // function showLoadMoreBtn() {
